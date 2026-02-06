@@ -1,11 +1,13 @@
 services:
+  # 1. Database: PostGIS (Spatial Intelligence)
   db:
-    image: postgis/postgis:15-3.3
+    image: postgis/postgis:16-3.4
     container_name: maritime_db
+    restart: always
     environment:
-      POSTGRES_USER: maritime
-      POSTGRES_PASSWORD: maritime_pass
-      POSTGRES_DB: maritime_intelligence
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:
@@ -13,9 +15,44 @@ services:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U maritime -d maritime_intelligence"]
-      interval: 10s
+      interval: 5s
       timeout: 5s
       retries: 5
+
+  # 2. Backend: FastAPI + MCP + AIS Ingestion
+  backend:
+    build:
+      context: ../backend
+      dockerfile: dockerfile/Dockerfile
+    container_name: maritime_backend
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_URL: ${DB_URL}
+      AIS_API_KEY: ${AIS_API_KEY}
+      MCP_MODE: "false"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../backend/src:/app/src
+    env_file: .env
+
+  # 3. Frontend: React Tactical Dashboard
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: dockerfile/Dockerfile
+    container_name: maritime_frontend
+    restart: always
+    ports:
+      - "5173:80"
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    env_file: .env
 
 volumes:
   postgres_data:

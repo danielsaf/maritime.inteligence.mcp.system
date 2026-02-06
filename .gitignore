@@ -1,5 +1,5 @@
 .idea/
-/backend/.env
+infrastructure/.env
 /frontend/node_modules
 .DS_Store
 __pycache__/

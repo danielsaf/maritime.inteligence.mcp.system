@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+/* 1. Global Reset & Layout - Critical for full-screen Leaflet maps */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevents unwanted scrollbars in the dashboard */
+  background-color: #020617; /* Deep slate background */
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* 2. Leaflet Container Styling */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background-color: #0f172a; /* Matches the dark theme of the dashboard */
+  font-family: inherit;
+}
+
+/* 3. Professional Dark Theme for Popups */
+.leaflet-popup-content-wrapper {
+  background: #1e293b; /* Slate-800 */
+  color: #f1f5f9; /* Slate-100 */
+  border-radius: 12px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #334155; /* Slate-700 */
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: 1.5;
+}
+
+.leaflet-popup-tip {
+  background: #1e293b;
+}
+
+/* 4. Alert Animations (For vessels in critical geofences) */
+.vessel-critical-pulse {
+  animation: pulse-red 1.5s infinite;
+}
+
+@keyframes pulse-red {
+  0% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 0px #ef4444); }
+  50% { transform: scale(1.2); opacity: 0.8; filter: drop-shadow(0 0 8px #ef4444); }
+  100% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 0px #ef4444); }
+}
+
+/* 5. Custom Scrollbar for Dashboard Sidebars */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}

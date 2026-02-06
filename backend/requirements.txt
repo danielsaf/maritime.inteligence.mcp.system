@@ -1,0 +1,17 @@
+# MCP Framework
+mcp==1.26.0.0
+fastmcp==3.0.0b1
+
+# DB and Geospatial
+psycopg[binary]==3.3.2
+shapely==2.1.2
+
+# Web Framework
+python-dotenv==1.2.1
+pydantic==2.12.5
+httpx==0.28.1
+websockets==16.0
+psycopg-pool==3.3.0
+fastapi==0.128.1
+uvicorn==0.40.0
+wsproto==1.3.2

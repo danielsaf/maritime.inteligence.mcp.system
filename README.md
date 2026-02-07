@@ -5,9 +5,6 @@ The core analytical engine of the Maritime Intelligence System. This backend han
 ---
 
 ### 📺 Application Preview (Frontend & Claude) `[DEMO]`
-<details>
-  <summary>Click to expand video preview 🎥</summary>
-  
   <br/>
 
   ### Tactical Map & AI Integration
@@ -17,7 +14,6 @@ The core analytical engine of the Maritime Intelligence System. This backend han
     Your browser does not support the video tag.
   </video>
 
-</details>
 
 ## 🏗️ System Architecture
 

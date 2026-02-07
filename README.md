@@ -20,15 +20,23 @@ The core analytical engine of the Maritime Intelligence System. This backend han
   </video>
 
 
-## 🏗️ System Architecture
+## 🏗️ System Architecture & Perfomance
 
-The backend is built on a "Producer-Consumer" architecture to handle real-time maritime data streams efficiently:
+### The backend is built on a "Producer-Consumer" architecture to handle real-time maritime data streams efficiently:
 
 1.  **AIS Ingestion (Producer)**: Connects to AISStream via WebSockets to receive live vessel positions in the Norwegian EEZ.
 2.  **Asynchronous Queue**: Buffers incoming data to prevent system overload during peak traffic.
 3.  **Security Engine (Consumer)**: Analyzes each vessel update for geofence violations and anomalies (Dead Reckoning, Jamming Detection).
 4.  **Spatial Persistence**: Stores and indexes data in PostGIS for high-performance spatial queries.
 5.  **Multi-Channel Delivery**: Updates the React Frontend via WebSockets and provides tools for AI Agents via MCP.
+
+### The system is built on an **asynchronous architecture** using Python's `asyncio` to handle high-volume data streams without blocking execution. 
+
+**Performance Optimization (Batching):**
+To ensure database stability and prevent overhead on the PostGIS instance, the system does not write every single AIS message immediately. Instead:
+* Incoming data is buffered in an asynchronous queue.
+* Vessels are processed and saved in **batches of 50 records**.
+* This batching strategy significantly improves write throughput and prevents database connection exhaustion during peak maritime traffic.
 
 ---
 
